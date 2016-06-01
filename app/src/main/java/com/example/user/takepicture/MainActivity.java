@@ -33,6 +33,9 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //Create Object File,for saving picture by camera
+                if(Environment.MEDIA_MOUNTED.equals(
+                        Environment.getExternalStorageState())
+                        || !Environment.isExternalStorageRemovable());
                 File outputImage = new File(Environment.getExternalStorageDirectory(), "tempImage.jpg");
                 try{
                     if (outputImage.exists()){
