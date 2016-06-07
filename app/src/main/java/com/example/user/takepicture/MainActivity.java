@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
         });
         chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
         chooseFromAlbum.setOnClickListener(new View.OnClickListener(){
+            @Override
             public void onClick(View v) {
                 File outputImage = new File(Environment.getExternalStorageDirectory(), "output_image.jpg");
                 try {
