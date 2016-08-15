@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,11 +16,15 @@ import android.widget.ImageView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.jar.Pack200;
 
 public class MainActivity extends Activity {
 
     public static final int TAKE_PHOTO = 1;
     public static final int CROP_PHOTO = 2;
+    public static final int MEDIA_TYPE_IMAGE = 3;
     private Button takePhoto;
     private Button chooseFromAlbum;
     private ImageView picture;
@@ -34,7 +39,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //Create Object File,for saving picture by camera
-                if(Environment.MEDIA_MOUNTED.equals(
+               /*if(Environment.MEDIA_MOUNTED.equals(
                         Environment.getExternalStorageState())
                         || !Environment.isExternalStorageRemovable());
                 File outputImage = new File(Environment.getExternalStorageDirectory(), "tempImage.jpg");
@@ -46,7 +51,8 @@ public class MainActivity extends Activity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                imageUri = Uri.fromFile(outputImage);
+                imageUri = Uri.fromFile(outputImage);*/
+                imageUri =getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(intent,TAKE_PHOTO);//Start camera
@@ -101,5 +107,24 @@ public class MainActivity extends Activity {
             default:
                 break;
         }
+    }
+
+    private static Uri getOutputMediaFileUri(int type){
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    private static File getOutputMediaFile(int type){
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Takepicture");
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                Log.d("Takepicture", "failed to create directory");
+                return null;
+            }
+        }
+
+        //create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE){
     }
 }
