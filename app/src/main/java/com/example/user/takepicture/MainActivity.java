@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.jar.Pack200;
-
+//SkImageDecoder::Factory returned null.
 public class MainActivity extends Activity {
 
     public static final int TAKE_PHOTO = 1;
